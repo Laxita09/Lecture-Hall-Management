@@ -13,8 +13,8 @@
   --surface: #f8fafc;
   --border: #e2e8f0;
   --border2: #cbd5e1;
-  --accent: #5b5bd6;
-  --accent2: #7c3aed;
+  --accent: #1e3a8a;
+  --accent2: #1e3a8a;
   --green: #059669;
   --green-bg: #ecfdf5;
   --green-bd: #a7f3d0;
@@ -29,8 +29,8 @@
   --radius: 12px;
   --radius-sm: 8px;
   --radius-xs: 6px;
-  --shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 2px 8px rgba(0, 0, 0, .06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, .10);
+  --shadow: 0 1px 2px rgba(0,0,0,0.1);
+  --shadow-md: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 html {
@@ -65,7 +65,7 @@ textarea {
 .login-screen {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #5b5bd6 0%, #7c3aed 100%);
+  background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.85)), url('lnmiit.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,7 +162,7 @@ textarea {
 .btn-login {
   width: 100%;
   padding: .8rem;
-  background: linear-gradient(135deg, #5b5bd6, #7c3aed);
+  background: var(--accent);
   color: #fff;
   border-radius: var(--radius-sm);
   font-weight: 700;
@@ -173,7 +173,6 @@ textarea {
 
 .btn-login:hover {
   opacity: .9;
-  transform: translateY(-1px)
 }
 
 .demo-creds {
@@ -205,9 +204,9 @@ textarea {
   font-family: monospace
 }
 
-/* ─── HEADER (matches original gradient) ──────── */
+/* ─── HEADER ──────────────────────────────────── */
 .site-header {
-  background: linear-gradient(135deg, #5b5bd6 0%, #7c3aed 100%);
+  background: #1e3a8a;
   position: sticky;
   top: 0;
   z-index: 200
@@ -376,23 +375,23 @@ textarea {
 }
 
 .icon-blue {
-  background: #eff6ff;
-  color: var(--blue)
+  background: #dbeafe;
+  color: #1e3a8a
 }
 
 .icon-green {
-  background: var(--green-bg);
-  color: var(--green)
+  background: #dcfce7;
+  color: #166534
 }
 
 .icon-orange {
-  background: var(--orange-bg);
-  color: var(--orange)
+  background: #ffedd5;
+  color: #9a3412
 }
 
 .icon-purple {
-  background: #f5f3ff;
-  color: #7c3aed
+  background: #e0e7ff;
+  color: #3730a3
 }
 
 .stat-num {
@@ -699,7 +698,7 @@ textarea {
 .btn-book-card {
   flex: 1;
   padding: .42rem;
-  background: linear-gradient(135deg, #5b5bd6, #7c3aed);
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
   color: #fff;
   border-radius: var(--radius-xs);
   font-size: .76rem;
@@ -1005,7 +1004,7 @@ textarea {
 /* ─── BUTTONS ──────────────────────────────────── */
 .btn-solid {
   padding: .5rem 1.1rem;
-  background: linear-gradient(135deg, #5b5bd6, #7c3aed);
+  background: var(--accent);
   color: #fff;
   border-radius: var(--radius-xs);
   font-weight: 700;
@@ -1015,7 +1014,6 @@ textarea {
 
 .btn-solid:hover {
   opacity: .9;
-  transform: translateY(-1px)
 }
 
 .btn-outline {

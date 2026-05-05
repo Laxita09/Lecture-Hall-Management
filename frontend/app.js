@@ -15,7 +15,7 @@ let pendingCancelId = null;
 // ── Helpers ───────────────────────────────────────────
 const showToast = (msg, type = 'info') => {
   const wrap = document.getElementById('toastWrap');
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+  const icons = { success: '', error: '', info: '' };
   const el = document.createElement('div');
   el.className = `toast ${type}`;
   el.innerHTML = `<span>${icons[type]}</span><span>${msg}</span>`;
@@ -136,7 +136,7 @@ function renderByBuilding(halls) {
   const container = document.getElementById('hallsContainer');
   container.innerHTML = '';
   if (!halls.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-ico">🔍</div><p>No halls match your filters.</p></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-ico"></div><p>No halls match your filters.</p></div>';
     return;
   }
   BUILDINGS.forEach(bld => {
@@ -170,16 +170,16 @@ function makeCard(h) {
       <div class="card-label"><span class="card-label-txt">Room</span>${badge}</div>
       <div class="card-num">${h.name}</div>
       <div class="card-meta">
-        <div class="card-meta-row"><span class="meta-ico">📍</span>${BUILDING_LABELS[h.building]}${h.floor ? ' · ' + h.floor : ''}</div>
-        <div class="card-meta-row"><span class="meta-ico">👥</span>${h.capacity} students</div>
+        <div class="card-meta-row"><span class="meta-ico"></span>${BUILDING_LABELS[h.building]}${h.floor ? ' · ' + h.floor : ''}</div>
+        <div class="card-meta-row"><span class="meta-ico"></span>${h.capacity} students</div>
       </div>
       <div class="tags-row">${tags || '<span style="font-size:.75rem;color:#94a3b8">No facilities listed</span>'}</div>
       <div class="card-actions">
-        <button class="btn-book-card" onclick="goToBook('${h._id}')">📅 Book Now</button>
-        <button class="btn-view-sched" onclick="goToHallSchedule('${h._id}')">📋 Schedule</button>
+        <button class="btn-book-card" onclick="goToBook('${h._id}')">Book Now</button>
+        <button class="btn-view-sched" onclick="goToHallSchedule('${h._id}')">Schedule</button>
         ${user.role === 'admin' ? `
-          <button class="btn-outline btn-sm" onclick="openEditHall('${h._id}')" title="Edit Hall">✏️</button>
-          <button class="btn-danger btn-sm" onclick="openDeleteHall('${h._id}', '${h.name.replace(/'/g, "\\'")}')" title="Delete Hall">🗑️</button>
+          <button class="btn-outline btn-sm" onclick="openEditHall('${h._id}')" title="Edit Hall">Edit</button>
+          <button class="btn-danger btn-sm" onclick="openDeleteHall('${h._id}', '${h.name.replace(/'/g, "\\'")}')" title="Delete Hall">Delete</button>
         ` : ''}
       </div>
     </div>`;
@@ -284,9 +284,9 @@ function setupBookingForm() {
       alertEl.classList.add('hidden');
       slotsEl.classList.remove('hidden');
       if (data.data.bookings.length === 0) {
-        slotsEl.innerHTML = '<div class="avail-slots-title">✅ Fully available on this date!</div>';
+        slotsEl.innerHTML = '<div class="avail-slots-title">Fully available on this date!</div>';
       } else {
-        let html = '<div class="avail-slots-title">⏰ Already booked slots:</div>';
+        let html = '<div class="avail-slots-title">Already booked slots:</div>';
         data.data.bookings.forEach(b => {
           html += `<div class="slot-row"><span>${b.startTime} – ${b.endTime}</span><span style="color:var(--text2)">${b.bookedFor} · ${b.professorName}</span></div>`;
         });
@@ -327,7 +327,7 @@ function setupBookingForm() {
       alertEl.classList.remove('hidden');
       if (data.success) {
         alertEl.className = 'conflict-alert ok';
-        alertEl.textContent = '✅ Booking confirmed!';
+        alertEl.textContent = 'Booking confirmed!';
         showToast('Hall booked successfully!', 'success');
         document.getElementById('availSlots').classList.add('hidden');
         setTimeout(() => {
@@ -339,7 +339,7 @@ function setupBookingForm() {
         }, 1600);
       } else {
         alertEl.className = 'conflict-alert conflict';
-        alertEl.textContent = '❌ ' + data.message;
+        alertEl.textContent = data.message;
       }
     } catch { showToast('Error creating booking', 'error'); }
   });
@@ -348,7 +348,7 @@ function setupBookingForm() {
 function updateHallPreview(hallId) {
   const preview = document.getElementById('hallPreview');
   if (!hallId) {
-    preview.innerHTML = '<div class="preview-placeholder"><div class="preview-ico">🏛️</div><p>Select a hall to see details & today\'s schedule</p></div>';
+    preview.innerHTML = '<div class="preview-placeholder"><div class="preview-ico"></div><p>Select a hall to see details & today\'s schedule</p></div>';
     return;
   }
   const h = allHalls.find(x => x._id === hallId);
@@ -427,12 +427,12 @@ async function loadSchedule() {
 function renderScheduleTable(bookings) {
   const container = document.getElementById('scheduleContainer');
   if (!bookings.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-ico">📅</div><p>No bookings found for the selected filters.</p></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-ico"></div><p>No bookings found for the selected filters.</p></div>';
     return;
   }
 
   const pillColor = { 'class': 'pill-class', 'club': 'pill-club', 'exam': 'pill-exam', 'event': 'pill-event', 'other': 'pill-other' };
-  const typeName = { 'class': '📚 Class', 'club': '🎭 Club', 'exam': '📝 Exam', 'event': '🎉 Event', 'other': '📌 Other' };
+  const typeName = { 'class': 'Class', 'club': 'Club', 'exam': 'Exam', 'event': 'Event', 'other': 'Other' };
 
   let rows = bookings.map(b => {
     const hallName = b.hall ? b.hall.name : 'Unknown Hall';
@@ -454,7 +454,7 @@ function renderScheduleTable(bookings) {
       <td>${b.professorName}</td>
       <td>
         <span class="mbc-status ${b.status === 'cancelled' ? 'st-cancelled' : 'st-confirmed'}">${b.status}</span>
-        ${(user && (user.role === 'admin' || user._id === b.professorId)) ? `<button class="btn-sm btn-outline" style="margin-left:8px;padding:.15rem .4rem" onclick="openDeleteBooking('${b._id}')" title="Delete Booking">🗑️</button>` : ''}
+        ${(user && (user.role === 'admin' || user._id === b.professorId)) ? `<button class="btn-sm btn-outline" style="margin-left:8px;padding:.15rem .4rem" onclick="openDeleteBooking('${b._id}')" title="Delete Booking">Delete</button>` : ''}
       </td>
     </tr>`;
   }).join('');
@@ -479,7 +479,7 @@ async function loadMyBookings() {
 function renderMyBookings(bookings) {
   const container = document.getElementById('myBookingsContainer');
   if (!bookings.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-ico">📋</div><p>You haven\'t made any bookings yet.<br>Go to <b>Book Hall</b> to get started!</p></div>';
+    container.innerHTML = '<div class="empty-state"><div class="empty-ico"></div><p>You haven\'t made any bookings yet.<br>Go to <b>Book Hall</b> to get started!</p></div>';
     return;
   }
   const today = new Date().toISOString().split('T')[0];
@@ -505,14 +505,14 @@ function renderMyBookings(bookings) {
         <div class="mbc-body">
           <div class="hall-nm">${hallName} ${isCancelled ? '<span style="text-decoration:line-through;opacity:.5">' : ''}</div>
           <div class="mbc-meta">
-            <span>⏰ ${b.startTime} – ${b.endTime} (${dur()})</span>
+            <span>${b.startTime} – ${b.endTime} (${dur()})</span>
             <span><span class="type-pill ${pillColor[b.purposeType] || 'pill-other'}">${b.purposeType}</span> ${b.bookedFor}</span>
           </div>
         </div>
         <div class="mbc-status-wrap" style="display:flex; gap: 8px; align-items: center;">
           <span class="mbc-status ${isCancelled ? 'st-cancelled' : 'st-confirmed'}">${b.status.toUpperCase()}</span>
           ${canCancel ? `<button class="btn-sm btn-outline" onclick="confirmCancel('${b._id}')">Cancel</button>` : ''}
-          <button class="btn-sm btn-outline" style="padding:.15rem .4rem" onclick="openDeleteBooking('${b._id}')" title="Delete Booking">🗑️</button>
+          <button class="btn-sm btn-outline" style="padding:.15rem .4rem" onclick="openDeleteBooking('${b._id}')" title="Delete Booking">Delete</button>
         </div>
       </div>`;
   });

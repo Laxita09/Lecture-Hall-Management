@@ -1,461 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lecture Hall Booking — Campus</title>
-  <meta name="description" content="Real-time lecture hall booking system for campus professors."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Real-time lecture hall booking system for campus professors." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- ═══ LOGIN ═══ -->
-<div id="loginScreen" class="login-screen hidden">
-  <div class="login-card">
-    <div class="login-logo">🎓</div>
-    <h1 class="login-title">LT Booking System</h1>
-    <p class="login-sub">Sign in with your professor account</p>
-    <form id="loginForm" novalidate>
-      <div class="login-field">
-        <label for="l-username">Username</label>
-        <input type="text" id="l-username" placeholder="e.g. prof.sharma" autocomplete="username"/>
-      </div>
-      <div class="login-field">
-        <label for="l-password">Password</label>
-        <div class="pw-wrap">
-          <input type="password" id="l-password" placeholder="••••••••" autocomplete="current-password"/>
-          <button type="button" id="togglePw" class="pw-eye">👁</button>
+  <!-- ═══ LOGIN ═══ -->
+  <div id="loginScreen" class="login-screen hidden">
+    <div class="login-card">
+      <div class="login-logo"></div>
+      <h1 class="login-title">LT Booking System</h1>
+      <p class="login-sub">Sign in with your account</p>
+      <form id="loginForm" novalidate>
+        <div class="login-field">
+          <label for="l-username">Username</label>
+          <input type="text" id="l-username" placeholder="e.g. prof.sharma" autocomplete="username" />
         </div>
-      </div>
-      <div id="loginErr" class="login-err hidden"></div>
-      <button type="submit" class="btn-login">Sign In</button>
-    </form>
-    <div class="demo-creds">
-      <div class="demo-title">Demo Accounts</div>
-      <div class="demo-grid">
-        <span>prof.sharma / sharma123</span>
-        <span>prof.mehta / mehta123</span>
-        <span>admin / admin123</span>
+        <div class="login-field">
+          <label for="l-password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="l-password" placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" id="togglePw" class="pw-eye">👁</button>
+          </div>
+        </div>
+        <div id="loginErr" class="login-err hidden"></div>
+        <button type="submit" class="btn-login">Sign In</button>
+      </form>
+      <div class="demo-creds">
+        <div class="demo-title">Demo Accounts</div>
+        <div class="demo-grid">
+          <span>prof.sharma / sharma123</span>
+          <span>prof.mehta / mehta123</span>
+          <span>admin / admin123</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ═══ APP ═══ -->
-<div id="appScreen" class="hidden">
+  <!-- ═══ APP ═══ -->
+  <div id="appScreen" class="hidden">
 
-  <!-- HEADER (original gradient style) -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-brand">
-        <div class="brand-icon-wrap">🎓</div>
-        <div>
-          <div class="brand-title">Lecture Hall Management</div>
-          <div class="brand-sub">Real-time availability across all campus buildings</div>
-        </div>
-      </div>
-      <nav class="header-nav">
-        <button class="nav-btn active" data-view="dashboard">📊 Dashboard</button>
-        <button class="nav-btn" data-view="booking">📅 Book Hall</button>
-        <button class="nav-btn" data-view="schedule">🗓 Schedule</button>
-        <button class="nav-btn" data-view="mybookings">📋 My Bookings</button>
-      </nav>
-      <div class="header-actions">
-        <button class="btn-solid btn-sm admin-only hidden" id="openAddModal">＋ Add Hall</button>
-        <div class="user-info-wrap">
-          <div class="user-avatar" id="userInitial">?</div>
+    <!-- HEADER (original gradient style) -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
           <div>
-            <div class="user-name-hdr" id="headerUserName">—</div>
-            <div class="user-dept-hdr" id="headerUserDept">—</div>
+            <div class="brand-title">Lecture Hall Management</div>
+
           </div>
         </div>
-        <button class="btn-logout" id="logoutBtn">⏻ Sign out</button>
+        <nav class="header-nav">
+          <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+          <button class="nav-btn" data-view="booking">Book Hall</button>
+          <button class="nav-btn" data-view="schedule">Schedule</button>
+          <button class="nav-btn" data-view="mybookings">My Bookings</button>
+        </nav>
+        <div class="header-actions">
+          <button class="btn-solid btn-sm admin-only hidden" id="openAddModal">Add Hall</button>
+          <div class="user-info-wrap">
+            <div class="user-avatar" id="userInitial">?</div>
+            <div>
+              <div class="user-name-hdr" id="headerUserName">—</div>
+              <div class="user-dept-hdr" id="headerUserDept">—</div>
+            </div>
+          </div>
+          <button class="btn-logout" id="logoutBtn">⏻ Sign out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-wrap">
+
+      <!-- ═══ DASHBOARD ═══ -->
+      <div id="view-dashboard" class="view active">
+
+        <!-- Stats -->
+        <div class="stats-row">
+          <div class="stat-box">
+            
+            <div>
+              <div class="stat-num" id="statTotal">—</div>
+              <div class="stat-lbl">Total Halls</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            
+            <div>
+              <div class="stat-num" id="statAvail">—</div>
+              <div class="stat-lbl">Available</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            
+            <div>
+              <div class="stat-num" id="statOcc">—</div>
+              <div class="stat-lbl">Occupied</div>
+            </div>
+          </div>
+          <div class="stat-box">
+            
+            <div>
+              <div class="stat-num">3</div>
+              <div class="stat-lbl">Buildings</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters (original layout) -->
+        <div class="filters-card">
+          <div class="filters-top">
+            <div class="search-wrap">
+              <span class="search-ico"></span>
+              <input type="text" id="searchInput" class="search-inp"
+                placeholder="Search by hall ID, building or facility..." />
+            </div>
+            <div class="filter-selects">
+              <div class="select-wrap">
+                <select id="filterBuilding" class="f-select">
+                  <option value="">All buildings</option>
+                  <option value="Academic Block">Academic Block</option>
+                  <option value="Mechanical Department Building">Mechanical Dept.</option>
+                  <option value="ERP Building">ERP Building</option>
+                </select>
+                <span class="sel-arrow">▾</span>
+              </div>
+              <div class="select-wrap">
+                <select id="filterStatus" class="f-select">
+                  <option value="">Any status</option>
+                  <option value="Available">Available</option>
+                  <option value="Occupied">Occupied</option>
+                </select>
+                <span class="sel-arrow">▾</span>
+              </div>
+              <div class="select-wrap">
+                <input type="number" id="filterCapacity" class="f-select cap-inp" placeholder="Min capacity" min="1" />
+              </div>
+            </div>
+          </div>
+          <div class="facility-pills-row">
+            <span class="fac-label">Facilities:</span>
+            <div class="fac-pills" id="facilityPills">
+              <button class="fac-pill active" data-fac="">All</button>
+              <button class="fac-pill" data-fac="Projector">Projector</button>
+              <button class="fac-pill" data-fac="Duct">Duct</button>
+              <button class="fac-pill" data-fac="Smart Board">Smart Board</button>
+              <button class="fac-pill" data-fac="Wi-Fi">Wi-Fi</button>
+              <button class="fac-pill" data-fac="Microphone">Microphone</button>
+              <button class="fac-pill" data-fac="Blackboard">Blackboard</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Halls by Building -->
+        <div id="hallsContainer"></div>
+      </div>
+
+      <!-- ═══ BOOK HALL ═══ -->
+      <div id="view-booking" class="view">
+        <div class="view-header">
+          <h2 class="view-title">Book a Lecture Hall</h2>
+          <p class="view-desc">Select a hall, date and time slot. Conflicts are automatically detected.</p>
+        </div>
+        <div class="booking-layout">
+          <div class="booking-form-wrap">
+            <form id="bookingForm" novalidate>
+              <div class="form-section">
+                <div class="form-section-title">Hall &amp; Time</div>
+                <div class="form-grid">
+                  <div class="fg full">
+                    <label>Select Hall <span class="req">*</span></label>
+                    <select id="bk-hall" required>
+                      <option value="">Choose a lecture hall…</option>
+                    </select>
+                  </div>
+                  <div class="fg">
+                    <label>Date <span class="req">*</span></label>
+                    <input type="date" id="bk-date" required />
+                  </div>
+                  <div class="fg">
+                    <label>Duration</label>
+                    <div class="duration-display" id="durationDisplay">—</div>
+                  </div>
+                  <div class="fg">
+                    <label>Start Time <span class="req">*</span></label>
+                    <select id="bk-start" required>
+                      <option value="">Start Time...</option>
+                      <option value="08:00">08:00 AM</option>
+                      <option value="08:30">08:30 AM</option>
+                      <option value="09:00">09:00 AM</option>
+                      <option value="09:30">09:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="11:00">11:00 AM</option>
+                      <option value="11:30">11:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="12:30">12:30 PM</option>
+                      <option value="13:00">01:00 PM</option>
+                      <option value="13:30">01:30 PM</option>
+                      <option value="14:00">02:00 PM</option>
+                      <option value="14:30">02:30 PM</option>
+                      <option value="15:00">03:00 PM</option>
+                      <option value="15:30">03:30 PM</option>
+                      <option value="16:00">04:00 PM</option>
+                      <option value="16:30">04:30 PM</option>
+                      <option value="17:00">05:00 PM</option>
+                      <option value="17:30">05:30 PM</option>
+                      <option value="18:00">06:00 PM</option>
+                      <option value="18:30">06:30 PM</option>
+                      <option value="19:00">07:00 PM</option>
+                      <option value="19:30">07:30 PM</option>
+                      <option value="20:00">08:00 PM</option>
+                    </select>
+                  </div>
+                  <div class="fg">
+                    <label>End Time <span class="req">*</span></label>
+                    <select id="bk-end" required>
+                      <option value="">End Time...</option>
+                      <option value="08:30">08:30 AM</option>
+                      <option value="09:00">09:00 AM</option>
+                      <option value="09:30">09:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="11:00">11:00 AM</option>
+                      <option value="11:30">11:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="12:30">12:30 PM</option>
+                      <option value="13:00">01:00 PM</option>
+                      <option value="13:30">01:30 PM</option>
+                      <option value="14:00">02:00 PM</option>
+                      <option value="14:30">02:30 PM</option>
+                      <option value="15:00">03:00 PM</option>
+                      <option value="15:30">03:30 PM</option>
+                      <option value="16:00">04:00 PM</option>
+                      <option value="16:30">04:30 PM</option>
+                      <option value="17:00">05:00 PM</option>
+                      <option value="17:30">05:30 PM</option>
+                      <option value="18:00">06:00 PM</option>
+                      <option value="18:30">06:30 PM</option>
+                      <option value="19:00">07:00 PM</option>
+                      <option value="19:30">07:30 PM</option>
+                      <option value="20:00">08:00 PM</option>
+                      <option value="20:30">08:30 PM</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-section">
+                <div class="form-section-title">Purpose</div>
+                <div class="form-grid">
+                  <div class="fg full">
+                    <label>Booking Type</label>
+                    <div class="purpose-pills">
+                      <label class="purpose-pill"><input type="radio" name="purposeType" value="class" checked /> Class</label>
+                      <label class="purpose-pill"><input type="radio" name="purposeType" value="club" /> Club Activity</label>
+                      <label class="purpose-pill"><input type="radio" name="purposeType" value="exam" /> Exam</label>
+                      <label class="purpose-pill"><input type="radio" name="purposeType" value="event" /> Event</label>
+                      <label class="purpose-pill"><input type="radio" name="purposeType" value="other" /> Other</label>
+                    </div>
+                  </div>
+                  <div class="fg full">
+                    <label>Subject / Club / Event Name <span class="req">*</span></label>
+                    <input type="text" id="bk-bookedFor" placeholder="e.g. Data Structures, Coding Club, Alumni Meet"
+                      required />
+                  </div>
+                  <div class="fg full">
+                    <label>Notes (optional)</label>
+                    <textarea id="bk-notes" rows="2" placeholder="Special requirements…"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div id="conflictAlert" class="conflict-alert hidden"></div>
+              <div id="availSlots" class="avail-slots hidden"></div>
+              <div class="form-actions">
+                <button type="button" class="btn-outline" id="checkAvail">Check Availability</button>
+                <button type="submit" class="btn-solid">Confirm Booking</button>
+              </div>
+            </form>
+          </div>
+          <div class="hall-preview" id="hallPreview">
+            <div class="preview-placeholder">
+              <div class="preview-ico"></div>
+              <p>Select a hall to see details &amp; today's schedule</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SCHEDULE ═══ -->
+      <div id="view-schedule" class="view">
+        <div class="view-header">
+          <h2 class="view-title">Hall Schedule</h2>
+          <p class="view-desc">View all bookings — filter by hall, date or type. Updates instantly.</p>
+        </div>
+        <div class="schedule-controls">
+          <div class="sched-filters">
+            <select id="sched-hall" class="f-sel">
+              <option value="">All Halls</option>
+            </select>
+            <input type="date" id="sched-date" class="f-inp" title="Filter by date" />
+            <select id="sched-type" class="f-sel">
+              <option value="">All Types</option>
+              <option value="class">Class</option>
+              <option value="club">Club Activity</option>
+              <option value="exam">Exam</option>
+              <option value="event">Event</option>
+              <option value="other">Other</option>
+            </select>
+            <button class="btn-outline btn-sm" id="sched-reset">Reset</button>
+          </div>
+        </div>
+        <div id="scheduleContainer"></div>
+      </div>
+
+      <!-- ═══ MY BOOKINGS ═══ -->
+      <div id="view-mybookings" class="view">
+        <div class="view-header">
+          <h2 class="view-title">My Bookings</h2>
+          <p class="view-desc">All bookings made under your account. Cancel upcoming ones if needed.</p>
+        </div>
+        <div id="myBookingsContainer"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- CANCEL CONFIRM -->
+  <div class="modal-bg" id="cancelModal">
+    <div class="modal-box confirm-box">
+      <div class="confirm-ico"></div>
+      <h2 class="modal-title">Cancel Booking?</h2>
+      <p class="confirm-txt" id="cancelMsg">This booking will be marked as cancelled.</p>
+      <div class="modal-ft" style="justify-content:center;gap:12px">
+        <button class="btn-outline" id="cancelNo">Keep It</button>
+        <button class="btn-danger" id="cancelYes">Yes, Cancel</button>
       </div>
     </div>
-  </header>
+  </div>
 
-  <main class="main-wrap">
-
-    <!-- ═══ DASHBOARD ═══ -->
-    <div id="view-dashboard" class="view active">
-
-      <!-- Stats -->
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="stat-icon icon-blue">⊞</div>
-          <div><div class="stat-num" id="statTotal">—</div><div class="stat-lbl">Total Halls</div></div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-icon icon-green">✓</div>
-          <div><div class="stat-num" id="statAvail">—</div><div class="stat-lbl">Available</div></div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-icon icon-orange">!</div>
-          <div><div class="stat-num" id="statOcc">—</div><div class="stat-lbl">Occupied</div></div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-icon icon-purple">▦</div>
-          <div><div class="stat-num">3</div><div class="stat-lbl">Buildings</div></div>
-        </div>
+  <!-- ═══ ADD HALL MODAL (Admin Only) ═══ -->
+  <div class="modal-bg" id="addModal">
+    <div class="modal-box">
+      <div class="modal-hd">
+        <h2 class="modal-title">Add New Lecture Hall</h2>
+        <button class="modal-close" id="closeAdd">Close</button>
       </div>
-
-      <!-- Filters (original layout) -->
-      <div class="filters-card">
-        <div class="filters-top">
-          <div class="search-wrap">
-            <span class="search-ico">🔍</span>
-            <input type="text" id="searchInput" class="search-inp" placeholder="Search by hall ID, building or facility..."/>
-          </div>
-          <div class="filter-selects">
-            <div class="select-wrap">
-              <select id="filterBuilding" class="f-select">
-                <option value="">All buildings</option>
+      <form id="addForm" novalidate>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="fg">
+              <label>Hall ID <span class="req">*</span></label>
+              <input type="number" name="hall_id" placeholder="e.g. 20" required min="1" />
+            </div>
+            <div class="fg">
+              <label>Hall Name <span class="req">*</span></label>
+              <input type="text" name="name" placeholder="e.g. LT-20" required />
+            </div>
+            <div class="fg full">
+              <label>Building <span class="req">*</span></label>
+              <select name="building" required>
+                <option value="">Select building…</option>
                 <option value="Academic Block">Academic Block</option>
-                <option value="Mechanical Department Building">Mechanical Dept.</option>
+                <option value="Mechanical Department Building">Mechanical Department Building</option>
                 <option value="ERP Building">ERP Building</option>
               </select>
-              <span class="sel-arrow">▾</span>
             </div>
-            <div class="select-wrap">
-              <select id="filterStatus" class="f-select">
-                <option value="">Any status</option>
+            <div class="fg">
+              <label>Capacity <span class="req">*</span></label>
+              <input type="number" name="capacity" placeholder="No. of students" required min="1" />
+            </div>
+            <div class="fg">
+              <label>Floor</label>
+              <input type="text" name="floor" placeholder="e.g. Ground Floor" />
+            </div>
+            <div class="fg full">
+              <label>Facilities (comma-separated)</label>
+              <input type="text" name="facilities" placeholder="Projector, AC, Smart Board..." />
+            </div>
+          </div>
+        </div>
+        <div class="modal-ft">
+          <button type="button" class="btn-outline" id="cancelAdd">Cancel</button>
+          <button type="submit" class="btn-solid">Add Hall</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ EDIT HALL MODAL (Admin Only) ═══ -->
+  <div class="modal-bg" id="editModal">
+    <div class="modal-box">
+      <div class="modal-hd">
+        <h2 class="modal-title">Edit Lecture Hall</h2>
+        <button class="modal-close" id="closeEdit">Close</button>
+      </div>
+      <form id="editForm" novalidate>
+        <input type="hidden" id="e-id" name="id" />
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="fg">
+              <label>Hall ID</label>
+              <input type="number" name="hall_id" id="e-hallId" required />
+            </div>
+            <div class="fg">
+              <label>Hall Name</label>
+              <input type="text" name="name" id="e-name" required />
+            </div>
+            <div class="fg full">
+              <label>Building</label>
+              <select name="building" id="e-building" required>
+                <option value="Academic Block">Academic Block</option>
+                <option value="Mechanical Department Building">Mechanical Department Building</option>
+                <option value="ERP Building">ERP Building</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Capacity</label>
+              <input type="number" name="capacity" id="e-capacity" required />
+            </div>
+            <div class="fg">
+              <label>Floor</label>
+              <input type="text" name="floor" id="e-floor" />
+            </div>
+            <div class="fg full">
+              <label>Facilities (comma-separated)</label>
+              <input type="text" name="facilities" id="e-facilities" />
+            </div>
+            <div class="fg full">
+              <label>Status</label>
+              <select name="status" id="e-status">
                 <option value="Available">Available</option>
                 <option value="Occupied">Occupied</option>
               </select>
-              <span class="sel-arrow">▾</span>
-            </div>
-            <div class="select-wrap">
-              <input type="number" id="filterCapacity" class="f-select cap-inp" placeholder="Min capacity" min="1"/>
             </div>
           </div>
         </div>
-        <div class="facility-pills-row">
-          <span class="fac-label">Facilities:</span>
-          <div class="fac-pills" id="facilityPills">
-            <button class="fac-pill active" data-fac="">All</button>
-            <button class="fac-pill" data-fac="Projector">Projector</button>
-            <button class="fac-pill" data-fac="Duct">Duct</button>
-            <button class="fac-pill" data-fac="Smart Board">Smart Board</button>
-            <button class="fac-pill" data-fac="Wi-Fi">Wi-Fi</button>
-            <button class="fac-pill" data-fac="Microphone">Microphone</button>
-            <button class="fac-pill" data-fac="Blackboard">Blackboard</button>
-          </div>
+        <div class="modal-ft">
+          <button type="button" class="btn-outline" id="cancelEdit">Cancel</button>
+          <button type="submit" class="btn-solid">Save Changes</button>
         </div>
-      </div>
-
-      <!-- Halls by Building -->
-      <div id="hallsContainer"></div>
-    </div>
-
-    <!-- ═══ BOOK HALL ═══ -->
-    <div id="view-booking" class="view">
-      <div class="view-header">
-        <h2 class="view-title">📅 Book a Lecture Hall</h2>
-        <p class="view-desc">Select a hall, date and time slot. Conflicts are automatically detected.</p>
-      </div>
-      <div class="booking-layout">
-        <div class="booking-form-wrap">
-          <form id="bookingForm" novalidate>
-            <div class="form-section">
-              <div class="form-section-title">Hall &amp; Time</div>
-              <div class="form-grid">
-                <div class="fg full">
-                  <label>Select Hall <span class="req">*</span></label>
-                  <select id="bk-hall" required><option value="">Choose a lecture hall…</option></select>
-                </div>
-                <div class="fg">
-                  <label>Date <span class="req">*</span></label>
-                  <input type="date" id="bk-date" required/>
-                </div>
-                <div class="fg">
-                  <label>Duration</label>
-                  <div class="duration-display" id="durationDisplay">—</div>
-                </div>
-                <div class="fg">
-                  <label>Start Time <span class="req">*</span></label>
-                  <select id="bk-start" required>
-                    <option value="">Start Time...</option>
-                    <option value="08:00">08:00 AM</option>
-                    <option value="08:30">08:30 AM</option>
-                    <option value="09:00">09:00 AM</option>
-                    <option value="09:30">09:30 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                    <option value="10:30">10:30 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="11:30">11:30 AM</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="12:30">12:30 PM</option>
-                    <option value="13:00">01:00 PM</option>
-                    <option value="13:30">01:30 PM</option>
-                    <option value="14:00">02:00 PM</option>
-                    <option value="14:30">02:30 PM</option>
-                    <option value="15:00">03:00 PM</option>
-                    <option value="15:30">03:30 PM</option>
-                    <option value="16:00">04:00 PM</option>
-                    <option value="16:30">04:30 PM</option>
-                    <option value="17:00">05:00 PM</option>
-                    <option value="17:30">05:30 PM</option>
-                    <option value="18:00">06:00 PM</option>
-                    <option value="18:30">06:30 PM</option>
-                    <option value="19:00">07:00 PM</option>
-                    <option value="19:30">07:30 PM</option>
-                    <option value="20:00">08:00 PM</option>
-                  </select>
-                </div>
-                <div class="fg">
-                  <label>End Time <span class="req">*</span></label>
-                  <select id="bk-end" required>
-                    <option value="">End Time...</option>
-                    <option value="08:30">08:30 AM</option>
-                    <option value="09:00">09:00 AM</option>
-                    <option value="09:30">09:30 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                    <option value="10:30">10:30 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="11:30">11:30 AM</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="12:30">12:30 PM</option>
-                    <option value="13:00">01:00 PM</option>
-                    <option value="13:30">01:30 PM</option>
-                    <option value="14:00">02:00 PM</option>
-                    <option value="14:30">02:30 PM</option>
-                    <option value="15:00">03:00 PM</option>
-                    <option value="15:30">03:30 PM</option>
-                    <option value="16:00">04:00 PM</option>
-                    <option value="16:30">04:30 PM</option>
-                    <option value="17:00">05:00 PM</option>
-                    <option value="17:30">05:30 PM</option>
-                    <option value="18:00">06:00 PM</option>
-                    <option value="18:30">06:30 PM</option>
-                    <option value="19:00">07:00 PM</option>
-                    <option value="19:30">07:30 PM</option>
-                    <option value="20:00">08:00 PM</option>
-                    <option value="20:30">08:30 PM</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="form-section">
-              <div class="form-section-title">Purpose</div>
-              <div class="form-grid">
-                <div class="fg full">
-                  <label>Booking Type</label>
-                  <div class="purpose-pills">
-                    <label class="purpose-pill"><input type="radio" name="purposeType" value="class" checked/> 📚 Class</label>
-                    <label class="purpose-pill"><input type="radio" name="purposeType" value="club"/> 🎭 Club Activity</label>
-                    <label class="purpose-pill"><input type="radio" name="purposeType" value="exam"/> 📝 Exam</label>
-                    <label class="purpose-pill"><input type="radio" name="purposeType" value="event"/> 🎉 Event</label>
-                    <label class="purpose-pill"><input type="radio" name="purposeType" value="other"/> 📌 Other</label>
-                  </div>
-                </div>
-                <div class="fg full">
-                  <label>Subject / Club / Event Name <span class="req">*</span></label>
-                  <input type="text" id="bk-bookedFor" placeholder="e.g. Data Structures, Coding Club, Alumni Meet" required/>
-                </div>
-                <div class="fg full">
-                  <label>Notes (optional)</label>
-                  <textarea id="bk-notes" rows="2" placeholder="Special requirements…"></textarea>
-                </div>
-              </div>
-            </div>
-            <div id="conflictAlert" class="conflict-alert hidden"></div>
-            <div id="availSlots" class="avail-slots hidden"></div>
-            <div class="form-actions">
-              <button type="button" class="btn-outline" id="checkAvail">🔍 Check Availability</button>
-              <button type="submit" class="btn-solid">✅ Confirm Booking</button>
-            </div>
-          </form>
-        </div>
-        <div class="hall-preview" id="hallPreview">
-          <div class="preview-placeholder"><div class="preview-ico">🏛️</div><p>Select a hall to see details &amp; today's schedule</p></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ SCHEDULE ═══ -->
-    <div id="view-schedule" class="view">
-      <div class="view-header">
-        <h2 class="view-title">🗓 Hall Schedule</h2>
-        <p class="view-desc">View all bookings — filter by hall, date or type. Updates instantly.</p>
-      </div>
-      <div class="schedule-controls">
-        <div class="sched-filters">
-          <select id="sched-hall" class="f-sel"><option value="">All Halls</option></select>
-          <input type="date" id="sched-date" class="f-inp" title="Filter by date"/>
-          <select id="sched-type" class="f-sel">
-            <option value="">All Types</option>
-            <option value="class">📚 Class</option>
-            <option value="club">🎭 Club Activity</option>
-            <option value="exam">📝 Exam</option>
-            <option value="event">🎉 Event</option>
-            <option value="other">📌 Other</option>
-          </select>
-          <button class="btn-outline btn-sm" id="sched-reset">↺ Reset</button>
-        </div>
-      </div>
-      <div id="scheduleContainer"></div>
-    </div>
-
-    <!-- ═══ MY BOOKINGS ═══ -->
-    <div id="view-mybookings" class="view">
-      <div class="view-header">
-        <h2 class="view-title">📋 My Bookings</h2>
-        <p class="view-desc">All bookings made under your account. Cancel upcoming ones if needed.</p>
-      </div>
-      <div id="myBookingsContainer"></div>
-    </div>
-
-  </main>
-</div>
-
-<!-- CANCEL CONFIRM -->
-<div class="modal-bg" id="cancelModal">
-  <div class="modal-box confirm-box">
-    <div class="confirm-ico">⚠️</div>
-    <h2 class="modal-title">Cancel Booking?</h2>
-    <p class="confirm-txt" id="cancelMsg">This booking will be marked as cancelled.</p>
-    <div class="modal-ft" style="justify-content:center;gap:12px">
-      <button class="btn-outline" id="cancelNo">Keep It</button>
-      <button class="btn-danger"  id="cancelYes">Yes, Cancel</button>
+      </form>
     </div>
   </div>
-</div>
 
-<!-- ═══ ADD HALL MODAL (Admin Only) ═══ -->
-<div class="modal-bg" id="addModal">
-  <div class="modal-box">
-    <div class="modal-hd">
-      <h2 class="modal-title">Add New Lecture Hall</h2>
-      <button class="modal-close" id="closeAdd">✕</button>
-    </div>
-    <form id="addForm" novalidate>
-      <div class="modal-body">
-        <div class="form-grid">
-          <div class="fg">
-            <label>Hall ID <span class="req">*</span></label>
-            <input type="number" name="hall_id" placeholder="e.g. 20" required min="1" />
-          </div>
-          <div class="fg">
-            <label>Hall Name <span class="req">*</span></label>
-            <input type="text" name="name" placeholder="e.g. LT-20" required />
-          </div>
-          <div class="fg full">
-            <label>Building <span class="req">*</span></label>
-            <select name="building" required>
-              <option value="">Select building…</option>
-              <option value="Academic Block">Academic Block</option>
-              <option value="Mechanical Department Building">Mechanical Department Building</option>
-              <option value="ERP Building">ERP Building</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label>Capacity <span class="req">*</span></label>
-            <input type="number" name="capacity" placeholder="No. of students" required min="1" />
-          </div>
-          <div class="fg">
-            <label>Floor</label>
-            <input type="text" name="floor" placeholder="e.g. Ground Floor" />
-          </div>
-          <div class="fg full">
-            <label>Facilities (comma-separated)</label>
-            <input type="text" name="facilities" placeholder="Projector, AC, Smart Board..." />
-          </div>
-        </div>
+  <!-- ═══ DELETE HALL CONFIRM ═══ -->
+  <div class="modal-bg" id="deleteHallModal">
+    <div class="modal-box confirm-box">
+      <div class="confirm-ico"></div>
+      <h2 class="modal-title">Delete Lecture Hall?</h2>
+      <p class="confirm-txt" id="deleteHallMsg">This action cannot be undone.</p>
+      <div class="modal-ft" style="justify-content:center;gap:12px">
+        <button class="btn-outline" id="cancelDeleteHall">Cancel</button>
+        <button class="btn-danger" id="confirmDeleteHall">Delete Hall</button>
       </div>
-      <div class="modal-ft">
-        <button type="button" class="btn-outline" id="cancelAdd">Cancel</button>
-        <button type="submit" class="btn-solid">Add Hall</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- ═══ EDIT HALL MODAL (Admin Only) ═══ -->
-<div class="modal-bg" id="editModal">
-  <div class="modal-box">
-    <div class="modal-hd">
-      <h2 class="modal-title">Edit Lecture Hall</h2>
-      <button class="modal-close" id="closeEdit">✕</button>
-    </div>
-    <form id="editForm" novalidate>
-      <input type="hidden" id="e-id" name="id" />
-      <div class="modal-body">
-        <div class="form-grid">
-          <div class="fg">
-            <label>Hall ID</label>
-            <input type="number" name="hall_id" id="e-hallId" required />
-          </div>
-          <div class="fg">
-            <label>Hall Name</label>
-            <input type="text" name="name" id="e-name" required />
-          </div>
-          <div class="fg full">
-            <label>Building</label>
-            <select name="building" id="e-building" required>
-              <option value="Academic Block">Academic Block</option>
-              <option value="Mechanical Department Building">Mechanical Department Building</option>
-              <option value="ERP Building">ERP Building</option>
-            </select>
-          </div>
-          <div class="fg">
-            <label>Capacity</label>
-            <input type="number" name="capacity" id="e-capacity" required />
-          </div>
-          <div class="fg">
-            <label>Floor</label>
-            <input type="text" name="floor" id="e-floor" />
-          </div>
-          <div class="fg full">
-            <label>Facilities (comma-separated)</label>
-            <input type="text" name="facilities" id="e-facilities" />
-          </div>
-          <div class="fg full">
-            <label>Status</label>
-            <select name="status" id="e-status">
-              <option value="Available">Available</option>
-              <option value="Occupied">Occupied</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="modal-ft">
-        <button type="button" class="btn-outline" id="cancelEdit">Cancel</button>
-        <button type="submit" class="btn-solid">Save Changes</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- ═══ DELETE HALL CONFIRM ═══ -->
-<div class="modal-bg" id="deleteHallModal">
-  <div class="modal-box confirm-box">
-    <div class="confirm-ico">🗑️</div>
-    <h2 class="modal-title">Delete Lecture Hall?</h2>
-    <p class="confirm-txt" id="deleteHallMsg">This action cannot be undone.</p>
-    <div class="modal-ft" style="justify-content:center;gap:12px">
-      <button class="btn-outline" id="cancelDeleteHall">Cancel</button>
-      <button class="btn-danger"  id="confirmDeleteHall">Delete Hall</button>
     </div>
   </div>
-</div>
 
-<!-- ═══ DELETE BOOKING CONFIRM (Admin Only) ═══ -->
-<div class="modal-bg" id="deleteBookingModal">
-  <div class="modal-box confirm-box">
-    <div class="confirm-ico">🗑️</div>
-    <h2 class="modal-title">Delete Booking?</h2>
-    <p class="confirm-txt">Are you sure you want to completely remove this booking from the system?</p>
-    <div class="modal-ft" style="justify-content:center;gap:12px;background:none;border-top:none;padding-top:0;">
-      <button class="btn-outline" id="cancelDeleteBooking">Cancel</button>
-      <button class="btn-danger"  id="confirmDeleteBooking">Delete</button>
+  <!-- ═══ DELETE BOOKING CONFIRM (Admin Only) ═══ -->
+  <div class="modal-bg" id="deleteBookingModal">
+    <div class="modal-box confirm-box">
+      <div class="confirm-ico"></div>
+      <h2 class="modal-title">Delete Booking?</h2>
+      <p class="confirm-txt">Are you sure you want to completely remove this booking from the system?</p>
+      <div class="modal-ft" style="justify-content:center;gap:12px;background:none;border-top:none;padding-top:0;">
+        <button class="btn-outline" id="cancelDeleteBooking">Cancel</button>
+        <button class="btn-danger" id="confirmDeleteBooking">Delete</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="toastWrap"></div>
-<script src="app.js"></script>
+  <div id="toastWrap"></div>
+  <script src="app.js"></script>
 </body>
+
 </html>
