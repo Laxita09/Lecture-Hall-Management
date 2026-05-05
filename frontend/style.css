@@ -496,47 +496,7 @@ textarea {
   width: 130px
 }
 
-.facility-pills-row {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  flex-wrap: wrap
-}
 
-.fac-label {
-  font-size: .78rem;
-  font-weight: 600;
-  color: var(--text2);
-  white-space: nowrap
-}
-
-.fac-pills {
-  display: flex;
-  gap: .4rem;
-  flex-wrap: wrap
-}
-
-.fac-pill {
-  padding: .3rem .75rem;
-  border-radius: 20px;
-  font-size: .78rem;
-  font-weight: 600;
-  border: 1.5px solid var(--border2);
-  background: #f8fafc;
-  color: var(--text2);
-  transition: all .18s
-}
-
-.fac-pill:hover {
-  border-color: var(--accent);
-  color: var(--accent)
-}
-
-.fac-pill.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff
-}
 
 /* ─── BUILDING SECTION ─────────────────────────── */
 .building-section {

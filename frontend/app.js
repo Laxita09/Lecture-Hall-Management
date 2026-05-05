@@ -161,7 +161,6 @@ function makeCard(h) {
   const badge = avail
     ? `<span class="status-badge badge-avail"><span class="status-dot dot-green"></span>Available</span>`
     : `<span class="status-badge badge-occ"><span class="status-dot dot-orange"></span>Occupied</span>`;
-  const tags = (h.facilities || []).map(f => `<span class="facility-tag">${f}</span>`).join('');
   const div = document.createElement('div');
   div.className = 'hall-card';
   div.innerHTML = `
@@ -173,7 +172,6 @@ function makeCard(h) {
         <div class="card-meta-row"><span class="meta-ico"></span>${BUILDING_LABELS[h.building]}${h.floor ? ' · ' + h.floor : ''}</div>
         <div class="card-meta-row"><span class="meta-ico"></span>${h.capacity} students</div>
       </div>
-      <div class="tags-row">${tags || '<span style="font-size:.75rem;color:#94a3b8">No facilities listed</span>'}</div>
       <div class="card-actions">
         <button class="btn-book-card" onclick="goToBook('${h._id}')">Book Now</button>
         <button class="btn-view-sched" onclick="goToHallSchedule('${h._id}')">Schedule</button>
@@ -213,13 +211,7 @@ function setupDashFilters() {
   document.getElementById('filterBuilding').addEventListener('change', applyFilters);
   document.getElementById('filterStatus').addEventListener('change', applyFilters);
   document.getElementById('filterCapacity').addEventListener('input', () => debounce(applyFilters));
-  document.getElementById('facilityPills').addEventListener('click', e => {
-    const pill = e.target.closest('.fac-pill'); if (!pill) return;
-    document.querySelectorAll('.fac-pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-    activeFacility = pill.dataset.fac;
-    applyFilters();
-  });
+
 }
 
 function applyFilters() {
@@ -232,8 +224,7 @@ function applyFilters() {
     const mb = !bld || h.building === bld;
     const mst = !status || h.status === status;
     const mc = !cap || h.capacity >= cap;
-    const mf = !activeFacility || (h.facilities || []).includes(activeFacility);
-    return ms && mb && mst && mc && mf;
+    return ms && mb && mst && mc;
   });
   renderByBuilding(filtered);
 }
