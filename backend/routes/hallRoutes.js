@@ -1,5 +1,5 @@
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const Hall = require('../models/Hall');
 
 router.get('/', async (req, res) => {
@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
   try {
     const exists = await Hall.findOne({ hall_id: Number(req.body.hall_id) });
     if (exists) return res.status(400).json({ success: false, message: `Hall ID ${req.body.hall_id} already exists` });
-    
+
     const newHall = new Hall({ ...req.body, hall_id: Number(req.body.hall_id) });
     await newHall.save();
     res.status(201).json({ success: true, data: newHall, message: 'Lecture Hall added successfully' });

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Hall = require('../models/Hall');
 const Professor = require('../models/Professor');
+const Booking = require('../models/Booking');
 require('dotenv').config();
 
 const connectDB = async () => {
@@ -15,25 +16,25 @@ const connectDB = async () => {
     const hallCount = await Hall.countDocuments();
     if (hallCount === 0) {
       const seedData = [
-        { hall_id: 1,  name: 'Hall A-101', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 2,  name: 'Hall A-102', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 3,  name: 'Hall A-201', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 4,  name: 'Hall A-202', building: 'Academic Block', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 5,  name: 'Hall A-203', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 6,  name: 'Hall A-301', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 7,  name: 'Hall A-302', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 8,  name: 'Hall A-303', building: 'Academic Block', capacity: 120, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 9,  name: 'Hall A-401', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 10, name: 'Hall A-402', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 11, name: 'Hall M-101', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 12, name: 'Hall M-102', building: 'Mechanical Department Building', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 13, name: 'Hall M-201', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 14, name: 'Hall M-202', building: 'Mechanical Department Building', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 15, name: 'Hall M-301', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 16, name: 'Hall E-101', building: 'ERP Building', capacity: 50, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 17, name: 'Hall E-102', building: 'ERP Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
-        { hall_id: 18, name: 'Hall E-201', building: 'ERP Building', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
-        { hall_id: 19, name: 'Hall E-202', building: 'ERP Building', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' }
+        { hall_id: 1,  name: 'LT-1', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 2,  name: 'LT-2', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 3,  name: 'LT-3', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 4,  name: 'LT-4', building: 'Academic Block', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 5,  name: 'LT-5', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 6,  name: 'LT-6', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 7,  name: 'LT-7', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 8,  name: 'LT-8', building: 'Academic Block', capacity: 120, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 9,  name: 'LT-9', building: 'Academic Block', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 10, name: 'LT-10', building: 'Academic Block', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 11, name: 'LT-11', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 12, name: 'LT-12', building: 'Mechanical Department Building', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 13, name: 'LT-13', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 14, name: 'LT-14', building: 'Mechanical Department Building', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 15, name: 'LT-15', building: 'Mechanical Department Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 16, name: 'LT-16', building: 'ERP Building', capacity: 50, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 17, name: 'LT-17', building: 'ERP Building', capacity: 60, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'Ground Floor' },
+        { hall_id: 18, name: 'LT-18', building: 'ERP Building', capacity: 80, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' },
+        { hall_id: 19, name: 'LT-19', building: 'ERP Building', capacity: 100, facilities: ['Projector', 'Duct', 'Smart Board', 'Wi-Fi', 'Microphone', 'Blackboard'], status: 'Available', floor: 'First Floor' }
       ];
       await Hall.insertMany(seedData);
       console.log('🌱 Seeded 19 lecture halls into MongoDB');
@@ -50,6 +51,29 @@ const connectDB = async () => {
       ];
       await Professor.insertMany(defaultProfs);
       console.log('🌱 Seeded 5 professor accounts into MongoDB');
+    }
+
+    const bookingCount = await Booking.countDocuments();
+    if (bookingCount === 0) {
+      const prof1 = await Professor.findOne({ username: 'prof.sharma' });
+      const prof2 = await Professor.findOne({ username: 'prof.mehta' });
+      const hall1 = await Hall.findOne({ hall_id: 1 });
+      const hall2 = await Hall.findOne({ hall_id: 2 });
+      const hall3 = await Hall.findOne({ hall_id: 11 });
+
+      if (prof1 && prof2 && hall1 && hall2 && hall3) {
+        const today = new Date().toISOString().split('T')[0];
+        const tmrw = new Date(); tmrw.setDate(tmrw.getDate() + 1);
+        const tmrwStr = tmrw.toISOString().split('T')[0];
+
+        const seedBookings = [
+          { hallId: hall1._id, date: today, startTime: '10:00', endTime: '12:00', purposeType: 'class', professorId: prof1._id, professorName: prof1.name, bookedFor: 'Data Structures', status: 'confirmed' },
+          { hallId: hall2._id, date: today, startTime: '14:00', endTime: '16:00', purposeType: 'club', professorId: prof2._id, professorName: prof2.name, bookedFor: 'Robotics Club', status: 'confirmed' },
+          { hallId: hall3._id, date: tmrwStr, startTime: '09:00', endTime: '11:00', purposeType: 'exam', professorId: prof1._id, professorName: prof1.name, bookedFor: 'Midterm Exam', status: 'confirmed' }
+        ];
+        await Booking.insertMany(seedBookings);
+        console.log('🌱 Seeded 3 bookings into MongoDB');
+      }
     }
 
   } catch (err) {
